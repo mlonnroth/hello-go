@@ -12,12 +12,12 @@ func main() {
 
 	fmt.Println("Open file...")
 
-	fd, err := os.Open("the_tempest.txt")
+	fd, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	//	buf := make(
+	fmt.Println("Close file...")
 	err = fd.Close()
 	if err != nil {
 		log.Fatal(err)
