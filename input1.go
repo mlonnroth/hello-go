@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 )
 
 func main() {
@@ -23,6 +24,22 @@ func main() {
 	for s.Scan() {
 		log.Println("line", s.Text())
 		if s.Text() == "quit" {
+			break
+		}
+	}
+
+	//Using keyboard
+	fmt.Println("Read keystroke, q to quit")
+	// disable input buffering (this shit doesn't work on Windows/Cygwin)
+	exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1").Run()
+	// do not display entered characters on the screen
+	exec.Command("stty", "-F", "/dev/tty", "-echo").Run()
+
+	var b []byte = make([]byte, 1)
+	for {
+		os.Stdin.Read(b)
+		fmt.Println("I got the byte", b, "("+string(b)+")")
+		if string(b) == "q" {
 			break
 		}
 	}
